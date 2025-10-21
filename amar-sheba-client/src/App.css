@@ -1,0 +1,225 @@
+/* src/index.css or src/App.css */
+
+/* Define CSS variables for colors */
+:root {
+  /* Default Light Theme Colors */
+  --color-background: #ffffff; /* সাদা ব্যাকগ্রাউন্ড */
+  --color-text: #212529;      /* প্রায় কালো টেক্সট */
+  --color-primary: #0d6efd;   /* বুটস্ট্র্যাপ নীল */
+  --color-secondary: #6c757d; /* ধূসর */
+  --color-border: #dee2e6;   /* হালকা ধূসর বর্ডার */
+  --color-widget-bg: #f8f9fa; /* উইজেটের হালকা ব্যাকগ্রাউন্ড */
+  --color-input-bg: #ffffff;  /* ইনপুট ফিল্ড ব্যাকগ্রাউন্ড */
+  --color-input-border: #ced4da; /* ইনপুট ফিল্ড বর্ডার */
+  --color-button-text: #ffffff; /* বাটনের টেক্সট (সাদা) */
+  --color-link: #0d6efd;      /* লিংক কালার */
+  --color-error: #dc3545;     /* লাল (error) */
+  --color-warning: #ffc107;   /* হলুদ (warning) */
+  --color-success: #198754;   /* সবুজ (success) */
+
+  /* Additional colors for notifications */
+  --color-notif-warning-bg: #fffbe6;
+  --color-notif-warning-border: #ffe58f;
+  --color-notif-error-bg: #fff1f0;
+  --color-notif-error-border: #ffccc7;
+
+  /* Add transitions for smooth theme changes */
+  --transition-speed: 0.3s;
+}
+
+/* Dark Theme Colors - Applied when body has 'dark-theme' class */
+body.dark-theme {
+  --color-background: #1a1a1a; /* ডার্ক ব্যাকগ্রাউন্ড */
+  --color-text: #e0e0e0;      /* হালকা ধূসর টেক্সট */
+  --color-primary: #4dabf7;   /* হালকা নীল */
+  --color-secondary: #adb5bd; /* হালকা ধূসর */
+  --color-border: #444444;   /* ডার্ক বর্ডার */
+  --color-widget-bg: #2c2c2c; /* উইজেটের ডার্ক ব্যাকগ্রাউন্ড */
+  --color-input-bg: #333333;  /* ইনপুট ফিল্ড ডার্ক ব্যাকগ্রাউন্ড */
+  --color-input-border: #555555; /* ইনপুট ফিল্ড ডার্ক বর্ডার */
+  --color-button-text: #ffffff; /* বাটনের টেক্সট (সাদা) */
+  --color-link: #4dabf7;      /* লিংক কালার (হালকা নীল) */
+  --color-error: #f08080;     /* হালকা লাল */
+  --color-warning: #ffd966;   /* হালকা হলুদ */
+  --color-success: #70db70;   /* হালকা সবুজ */
+
+   /* Dark theme notification colors */
+  --color-notif-warning-bg: #4d441f; /* গাঢ় হলুদ ব্যাকগ্রাউন্ড */
+  --color-notif-warning-border: #8c732a; /* আরও গাঢ় হলুদ বর্ডার */
+  --color-notif-error-bg: #5a2a2a; /* গাঢ় লাল ব্যাকগ্রাউন্ড */
+  --color-notif-error-border: #a34646; /* আরও গাঢ় লাল বর্ডার */
+}
+
+/* Apply base styles using variables */
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+  font-family: sans-serif; /* Add a default font */
+  margin: 0;
+  padding: 20px; /* Add some padding */
+}
+
+/* Style other elements using variables */
+button,
+input,
+select {
+  padding: 8px 12px;
+  border: 1px solid var(--color-input-border);
+  background-color: var(--color-input-bg);
+  color: var(--color-text);
+  border-radius: 4px;
+  transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+}
+
+button {
+  background-color: var(--color-primary);
+  color: var(--color-button-text);
+  border-color: var(--color-primary);
+  cursor: pointer;
+}
+button:hover {
+  opacity: 0.9;
+}
+button:disabled {
+  background-color: var(--color-secondary);
+  border-color: var(--color-secondary);
+  cursor: not-allowed;
+}
+
+
+a {
+    color: var(--color-link);
+}
+
+hr {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin: 20px 0;
+}
+
+/* Update existing Widget styles */
+.widget {
+  border: 1px solid var(--color-border);
+  background-color: var(--color-widget-bg);
+  color: var(--color-text); /* Ensure widget text uses theme color */
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+}
+
+/* Update Notification Widget Styles */
+.notification-widget li {
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+  border: 1px solid transparent; /* Base border */
+}
+/* Apply specific notification colors using variables */
+.notification-widget li[style*="rgb(255, 251, 230)"], /* Target previous inline style for warning */
+.notification-widget li.type-warning { /* Or add a class */
+   background-color: var(--color-notif-warning-bg);
+   border-color: var(--color-notif-warning-border);
+}
+.notification-widget li[style*="rgb(255, 241, 240)"], /* Target previous inline style for error */
+.notification-widget li.type-error { /* Or add a class */
+   background-color: var(--color-notif-error-bg);
+   border-color: var(--color-notif-error-border);
+}
+
+/* Update Document Wallet Styles */
+.document-wallet form {
+  margin-bottom: 20px;
+}
+.document-list ul {
+  list-style: none;
+  padding: 0;
+}
+.document-list li {
+   border-bottom: 1px solid var(--color-border);
+   padding: 10px 0;
+   transition: border-color var(--transition-speed) ease;
+}
+.document-list li:last-child {
+    border-bottom: none;
+}
+
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+.widget {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  background-color: #f9f9f9;
+}
+
+.widgets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.notification-widget ul {
+  list-style: none;
+  padding: 0;
+}
+
+.notification-widget li {
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.document-wallet form {
+  margin-bottom: 20px;
+}

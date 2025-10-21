@@ -1,0 +1,64 @@
+/* 🔹 মূল wrapper: পুরো স্ক্রিনে ব্যাকগ্রাউন্ড ও centering */
+.login-page {
+  /* এই পরিবর্তনগুলো যোগ করা হয়েছে:
+    এটিকে অন্যান্য কন্টেইনার থেকে বের করে পুরো স্ক্রিনে আনার জন্য।
+  */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw; /* 100% এর বদলে 100vw (viewport width) ব্যবহার করা হলো */
+  min-height: 100vh;
+  
+  background: linear-gradient(145deg, #0d6efd20, #212529 85%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  z-index: 1000; /* এটি যেন অন্য সবকিছুর উপরে থাকে */
+}
+
+/* 🔹 Login card */
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  background-color: var(--bs-body-bg);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  border: 0;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.login-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* 🔹 Inputs and button */
+.login-card input {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+}
+
+/* 🔹 Input focus style */
+.login-card input:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+.login-card button {
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  padding: 0.65rem 1rem;
+}
+
+/* 🔹 Dark theme support */
+.theme-dark .login-card {
+  background-color: #1e1e1e;
+  color: #f8f9fa;
+  border: 1px solid #333;
+}
+
+/* 🔹 Text-muted style */
+.text-muted {
+  font-size: 0.9rem;
+}

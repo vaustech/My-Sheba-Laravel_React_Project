@@ -1,0 +1,231 @@
+/* src/components/layouts/AdminLayout.css */
+
+/* ----- থিম ভেরিয়েবল ----- */
+.admin-layout.theme-light {
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+.admin-layout.theme-dark {
+  background-color: #212529;
+  color: #dee2e6;
+  --bs-border-color: var(--bs-border-color-translucent);
+  --bs-table-bg: var(--bs-gray-800);
+  --bs-table-striped-bg: var(--bs-gray-700);
+  --bs-table-hover-bg: var(--bs-gray-600);
+  --bs-table-border-color: var(--bs-border-color);
+  --bs-card-bg: var(--bs-gray-800);
+  --bs-list-group-bg: var(--bs-gray-800);
+  --bs-list-group-border-color: var(--bs-border-color);
+  --bs-list-group-color: var(--bs-light);
+  --bs-body-color: var(--bs-light);
+  --bs-body-bg: #212529;
+  --bs-secondary-bg: var(--bs-gray-700);
+  --bs-tertiary-bg: var(--bs-gray-800);
+}
+
+/* ----- বেস লেআউট ----- */
+.admin-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-navbar {
+  z-index: 1030;
+  flex-shrink: 0;
+}
+
+/* ----- বডি লেআউট ----- */
+.admin-body {
+  display: flex;
+  flex: 1; /* বাকি সব জায়গা দখল করবে */
+  padding-top: 56px; /* Navbar এর উচ্চতা */
+  min-height: 100vh;
+}
+
+/* ----- সাইডবার ----- */
+.admin-sidebar {
+  width: 260px;
+  padding: 1rem;
+  transition: all 0.3s ease-in-out;
+  border-right: 1px solid var(--bs-border-color);
+  flex-shrink: 0; /* সাইডবার যেন সংকুচিত না হয় */
+  
+  /* স্ক্রলের সাথে আটকে থাকবে */
+  position: sticky;
+  top: 56px; /* Navbar এর নিচে */
+  height: calc(100vh - 56px);
+  overflow-y: auto;
+}
+
+.admin-sidebar.collapsed {
+  width: 0;
+  padding: 0;
+  overflow: hidden;
+  border-right: none;
+}
+
+/* ----- সাইডবার থিম ----- */
+.theme-dark .admin-sidebar {
+  background-color: #1e1e1e; /* ডার্ক থিমের কার্ডের রঙের সাথে মিল রেখে */
+  color: #f8f9fa;
+}
+
+.theme-light .admin-sidebar {
+  background-color: #ffffff; /* হালকা থিমে সাদা */
+  color: #111;
+}
+
+/* ----- সাইডবার লিংক ----- */
+.admin-sidebar .nav-link {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.4rem;
+  border-radius: 0.4rem;
+  padding: 0.6rem 0.9rem;
+  white-space: nowrap; /* লেখা যেন এক লাইনে থাকে */
+  overflow: hidden;
+}
+
+.admin-sidebar .nav-link svg {
+  margin-right: 0.75rem;
+  flex-shrink: 0;
+}
+
+/* হালকা থিমের লিংক */
+.theme-light .admin-sidebar .nav-link {
+  color: var(--bs-secondary-emphasis);
+}
+.theme-light .admin-sidebar .nav-link:hover {
+  background-color: var(--bs-light);
+  color: var(--bs-primary-text-emphasis);
+}
+.theme-light .admin-sidebar .nav-link.active {
+  background-color: var(--bs-primary);
+  color: var(--bs-white);
+}
+
+/* ডার্ক থিমের লিংক */
+.theme-dark .admin-sidebar .nav-link {
+  color: var(--bs-gray-300);
+}
+.theme-dark .admin-sidebar .nav-link:hover {
+  background-color: var(--bs-gray-700);
+  color: #fff;
+}
+.theme-dark .admin-sidebar .nav-link.active {
+  background-color: var(--bs-primary);
+  color: #fff;
+}
+
+
+/* ----- প্রধান কন্টেন্ট এলাকা ----- */
+.admin-main {
+  flex-grow: 1; /* সাইডবারের পর বাকি সব জায়গা নেবে */
+  background-color: var(--bs-body-bg);
+  color: var(--bs-body-color);
+  padding: 1.5rem 2rem;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.theme-dark .admin-main {
+  background-color: #212529;
+  color: #f8f9fa;
+}
+
+.theme-light .admin-main {
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+/* কন্টেন্ট র‍্যাপার (Wrapper) */
+.admin-content-wrapper {
+  width: 100%;
+  max-width: 1400px; /* কন্টেন্টের সর্বোচ্চ প্রস্থ (ঐচ্ছিক) */
+  margin: 0 auto; /* র‍্যাপারকে সেন্টারে রাখে */
+}
+
+
+/* * !!! ---- প্রধান সমাধান ---- !!!
+ * <Outlet> এর মাধ্যমে আসা পেজের ভেতরের .container বা .container-fluid কে
+ * বুটস্ট্র্যাপের ডিফল্ট max-width ওভাররাইড করে 100% প্রস্থ দেওয়া হলো।
+*/
+.admin-content-wrapper .container,
+.admin-content-wrapper .container-fluid {
+  width: 100%;
+  max-width: 100%;
+  padding-left: 0;  /* অতিরিক্ত প্যাডিং বাদ দেওয়া হলো */
+  padding-right: 0; /* অতিরিক্ত প্যাডিং বাদ দেওয়া হলো */
+}
+
+
+/* টেবিল ও কার্ড যেন সবসময় 100% প্রস্থ নেয় */
+.admin-main table {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.admin-main .card {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  /* থিম অনুযায়ী কার্ডের ব্যাকগ্রাউন্ড */
+  background-color: var(--bs-card-bg, var(--bs-body-bg)); 
+}
+
+
+/* ----- অফক্যানভাস (মোবাইল সাইডবার) ----- */
+.admin-offcanvas {
+  border-right: 1px solid var(--bs-border-color);
+}
+
+.admin-offcanvas .nav-link {
+   padding: 0.75rem 1rem;
+   display: flex;
+   align-items: center;
+   border-radius: 0.375rem;
+   margin-bottom: 0.25rem;
+}
+.admin-offcanvas .nav-link svg {
+  margin-right: 0.75rem;
+}
+
+/* অফক্যানভাস লিংক (হালকা থিম) */
+.theme-light .admin-offcanvas .nav-link {
+  color: var(--bs-secondary-emphasis);
+}
+.theme-light .admin-offcanvas .nav-link:hover {
+  background-color: var(--bs-light);
+  color: var(--bs-primary-text-emphasis);
+}
+.theme-light .admin-offcanvas .nav-link.active {
+  background-color: var(--bs-primary);
+  color: var(--bs-white);
+}
+
+/* অফক্যানভাস লিংক (ডার্ক থিম) */
+.theme-dark .admin-offcanvas .nav-link {
+    color: var(--bs-gray-400);
+}
+.theme-dark .admin-offcanvas .nav-link:hover {
+  background-color: var(--bs-gray-700);
+  color: var(--bs-light);
+}
+.theme-dark .admin-offcanvas .nav-link.active {
+  background-color: var(--bs-primary);
+  color: var(--bs-white);
+}
+
+/* !!! ---- জোরপূর্বক সমাধান ---- !!!
+  <Outlet> এর মাধ্যমে আসা পেজের ভেতরের .container কে
+  পুরো প্রস্থ (full-width) করতে বাধ্য করা হচ্ছে।
+*/
+.admin-content-wrapper .container,
+.admin-content-wrapper .container-fluid {
+  width: 100% !important;
+  max-width: 100% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}

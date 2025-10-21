@@ -1,0 +1,20 @@
+// src/main.jsx
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App.jsx';
+import { BrowserRouter } from 'react-router-dom';
+
+// --- ✅ Bootstrap CSS ইম্পোর্ট করুন ---
+import 'bootstrap/dist/css/bootstrap.min.css';
+// ----------------------------------------
+
+// আপনার কাস্টম CSS Bootstrap এর পরে রাখুন
+import './index.css';
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </React.StrictMode>
+);

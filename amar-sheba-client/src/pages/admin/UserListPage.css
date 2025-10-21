@@ -1,0 +1,33 @@
+/* UserListPage.css */
+
+.user-table {
+  font-size: 15px;
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--bs-body-bg); /* ডার্ক/লাইট থিম সাপোর্ট করে */
+  vertical-align: middle;
+}
+
+.user-table thead {
+  /* টেবিলের হেডারকে সব থিমেই ডার্ক রাখা হলো */
+  background-color: #1f2937;
+  color: #ffffff;
+}
+
+.user-table td,
+.user-table th {
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* কার্ডের ভেতরের প্যাডিং */
+.card-body {
+  padding: 1.5rem;
+}
+
+/* ছোট স্ক্রিনের জন্য */
+@media (min-width: 992px) {
+  .card-body {
+    padding: 2rem;
+  }
+}
