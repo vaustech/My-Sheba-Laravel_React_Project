@@ -17,6 +17,8 @@ use App\Http\Controllers\Api\Admin\SupportTicketController as AdminSupportTicket
 use App\Http\Controllers\Api\Admin\AuditLogController as AdminAuditLogController;
 use App\Http\Controllers\Api\Admin\AppointmentController as AdminAppointmentController;
 use App\Http\Controllers\Api\Admin\AnalyticsController as AdminAnalyticsController;
+use App\Http\Controllers\Api\Admin\ServiceController as AdminServiceController;
+use App\Http\Controllers\Api\Admin\AvailableSlotController as AdminAvailableSlotController;
 // ====================
 // 🔐 Public Routes (No Auth Required)
 // ====================
@@ -84,4 +86,11 @@ Route::middleware(['auth:api', 'admin'])->prefix('admin')->group(function () {
     // Route::get('appointments/{appointment}', [AdminAppointmentController::class, 'show']); // পরে যোগ করা যেতে পারে
     // 📊 Analytics Routes
     Route::get('analytics/summary', [AdminAnalyticsController::class, 'summary']);
+    // 🛠️ Service Management
+    Route::apiResource('services', AdminServiceController::class);
+
+    // ⏰ Available Slot Management
+    Route::get('slots', [AdminAvailableSlotController::class, 'index']);
+    Route::post('slots', [AdminAvailableSlotController::class, 'store']);
+    Route::delete('slots/{availableSlot}', [AdminAvailableSlotController::class, 'destroy']);
 });

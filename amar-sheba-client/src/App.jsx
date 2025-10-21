@@ -15,6 +15,8 @@ import AdminLayout from './components/layouts/AdminLayout';
 import AuditLogPage from './pages/admin/AuditLogPage';
 import AdminAppointmentsPage from './pages/admin/AdminAppointmentsPage';
 import AdminDashboardPage from './pages/admin/AdminDashboardPage';
+import AdminServicesPage from './pages/admin/AdminServicesPage'; // <-- ইম্পোর্ট করুন
+import AdminSlotsPage from './pages/admin/AdminSlotsPage';
 
 const ProtectedRoute = ({ allowedRoles, children }) => {
     const { user, loading } = useAuth();
@@ -148,6 +150,8 @@ function App() {
                     <Route path="audit-logs" element={<AuditLogPage />} /> {/* ✅ ADMIN রুট */}
                   <Route path="appointments" element={<AdminAppointmentsPage />} />
                     <Route path="dashboard" element={<AdminDashboardPage />} />
+                    <Route path="services" element={<AdminServicesPage />} /> 
+    <Route path="slots" element={<AdminSlotsPage />} />       
                 </Route>
 
                 {/* 404 */}

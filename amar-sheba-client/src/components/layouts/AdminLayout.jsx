@@ -21,6 +21,7 @@ import {
 import './AdminLayout.css';
 import {  CalendarCheckFill } from 'react-bootstrap-icons';
 import { /* ..., */ Speedometer2 } from 'react-bootstrap-icons';
+import { /* ..., */ GearFill, ClockHistory } from 'react-bootstrap-icons';
 const AdminLayout = () => {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [showOffcanvas, setShowOffcanvas] = useState(false);
@@ -76,6 +77,21 @@ const AdminLayout = () => {
                <CalendarCheckFill className="me-2" /> অ্যাপয়েন্টমেন্ট
             </Nav.Link>
         </Nav.Item>
+
+{/* --- সেবা ব্যবস্থাপনা লিংক --- */}
+        <Nav.Item>
+            <Nav.Link as={Link} to="/admin/services" eventKey="/admin/services">
+               <GearFill className="me-2" /> সেবা ব্যবস্থাপনা
+            </Nav.Link>
+        </Nav.Item>
+         {/* --- স্লট ব্যবস্থাপনা লিংক --- */}
+         <Nav.Item>
+            <Nav.Link as={Link} to="/admin/slots" eventKey="/admin/slots">
+               <ClockHistory className="me-2" /> স্লট ব্যবস্থাপনা
+            </Nav.Link>
+        </Nav.Item>
+
+
 
     </Nav>
     
