@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, ListGroup } from 'react-bootstrap';
+import "./../styles/WidgetCard.css";
 
 const ETinWidget = ({ eTin }) => {
   if (!eTin) {

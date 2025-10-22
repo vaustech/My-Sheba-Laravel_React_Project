@@ -18,6 +18,14 @@ import AdminSlotsPage from './pages/admin/AdminSlotsPage';
 import AppointmentBookingPage from './pages/AppointmentBookingPage';
 import { Navbar, Nav } from 'react-bootstrap';
 
+// =========Style Imports=========
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./styles/WidgetCard.css";
+import "./styles/Dashboard.css";
+import "./styles/Navbar.css";
+import "./styles/Sidebar.css";
+// ===============================
+
 const ProtectedRoute = ({ allowedRoles, children }) => {
   const { user, loading } = useAuth();
   if (loading)
@@ -130,7 +138,8 @@ function App() {
 
   return (
     <AuthContext.Provider value={authContextValue}>
-      <Navbar bg="dark" variant="dark" expand="lg">
+      <Navbar bg="light" variant="light" expand="lg" className="shadow-sm">
+
         <Container>
           <Navbar.Brand as={Link} to="/">আমার সেবা</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />

@@ -1,243 +1,168 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import apiClient from '../api/axios';
-import NotificationWidget from './NotificationWidget';
-import NidWidget from './NidWidget';
-import DrivingLicenseWidget from './DrivingLicenseWidget';
-import VehicleFitnessWidget from './VehicleFitnessWidget';
-import DocumentWallet from './DocumentWallet';
-import StatusChart from './StatusChart';
-import ActivityHistory from './ActivityHistory';
-import ETinWidget from './ETinWidget';
-
-// --- React Bootstrap Imports ---
+import React from "react";
+import { Card, Row, Col, Alert } from "react-bootstrap";
 import {
-  Container,
-  Row,
-  Col,
-  Card,
-  Spinner,
-  Alert,
-  Button,
-  Badge,
-} from 'react-bootstrap';
+  PersonVcardFill,
+  CarFrontFill,
+  FileEarmarkTextFill,
+  WalletFill,
+  BarChartFill,
+} from "react-bootstrap-icons";
+import NidWidget from "./NidWidget";
+import DrivingLicenseWidget from "./DrivingLicenseWidget";
+import VehicleFitnessWidget from "./VehicleFitnessWidget";
+import ETinWidget from "./ETinWidget";
+import StatusChart from "./StatusChart";
+import "./../styles/WidgetCard.css";
+const DocumentWallet = ({ dashboardData }) => {
+  if (!dashboardData) {
+    return (
+      <Alert variant="info" className="text-center">
+        📂 ডেটা লোড হচ্ছে...
+      </Alert>
+    );
+  }
 
-import { useAuth } from '../context/AuthContext'; // ✅ Role এবং User তথ্য নেওয়ার জন্য
+  const { nid, driving_licenses, vehicle_fitnesses, e_tin } = dashboardData;
 
-const Dashboard = () => {
-  const { user } = useAuth(); // ✅ Context থেকে বর্তমান ইউজার তথ্য নেওয়া
-  const [dashboardData, setDashboardData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  // ✅ Chart data তৈরি (child side calculation only)
+  const serviceStatusData = (() => {
+    let active = 0,
+      expired = 0,
+      expiringSoon = 0;
 
-  // 🔄 ড্যাশবোর্ড ডেটা ফেচ করার ফাংশন
-  const fetchDashboardData = useCallback(async () => {
-    setLoading(true);
-    setError('');
-    try {
-      const response = await apiClient.get('/dashboard');
-      setDashboardData(response.data);
-    } catch (err) {
-      console.error('ড্যাশবোর্ড ডেটা লোড করা যায়নি', err);
-      setError('⚠️ ড্যাশবোর্ড ডেটা লোড করতে সমস্যা হয়েছে।');
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+    const items = [
+      ...(driving_licenses || []),
+      ...(vehicle_fitnesses || []),
+    ];
 
-  useEffect(() => {
-    fetchDashboardData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // --- সার্ভিস স্ট্যাটাস ডেটা ---
-  const serviceStatusData = useMemo(() => {
-    let active = 0;
-    let expired = 0;
-    let expiringSoon = 0;
-
-    const checkStatus = (items, expiryDaysThreshold = 60) => {
-      if (!items) return;
-      items.forEach((item) => {
-        if (item.status === 'Expired') {
-          expired++;
-        } else if (item.expiry_date) {
-          const expiry = new Date(item.expiry_date);
-          const today = new Date();
-          const diffDays = Math.ceil((expiry - today) / (1000 * 60 * 60 * 24));
-
-          if (diffDays >= 0 && diffDays <= expiryDaysThreshold) expiringSoon++;
-          else if (diffDays > expiryDaysThreshold) active++;
-          else expired++;
-        } else {
-          active++;
-        }
-      });
-    };
-
-    checkStatus(dashboardData?.driving_licenses, 30);
-    checkStatus(dashboardData?.vehicle_fitnesses, 60);
+    items.forEach((item) => {
+      if (item.status === "Expired") expired++;
+      else if (item.expiry_date) {
+        const expiry = new Date(item.expiry_date);
+        const today = new Date();
+        const diffDays = Math.ceil((expiry - today) / (1000 * 60 * 60 * 24));
+        if (diffDays >= 0 && diffDays <= 60) expiringSoon++;
+        else if (diffDays > 60) active++;
+        else expired++;
+      } else active++;
+    });
 
     return {
-      labels: [
-        'Active (সক্রিয়)',
-        'Expiring Soon (মেয়াদ শেষের পথে)',
-        'Expired (মেয়াদোত্তীর্ণ)',
-      ],
+      labels: ["Active", "Expiring Soon", "Expired"],
       datasets: [
         {
-          label: 'Service Status',
           data: [active, expiringSoon, expired],
           backgroundColor: [
-            'rgba(75, 192, 192, 0.7)',
-            'rgba(255, 206, 86, 0.7)',
-            'rgba(255, 99, 132, 0.7)',
+            "rgba(25,135,84,0.7)",
+            "rgba(255,193,7,0.7)",
+            "rgba(220,53,69,0.7)",
           ],
           borderColor: [
-            'rgba(75, 192, 192, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(255, 99, 132, 1)',
+            "rgba(25,135,84,1)",
+            "rgba(255,193,7,1)",
+            "rgba(220,53,69,1)",
           ],
           borderWidth: 1,
         },
       ],
     };
-  }, [dashboardData]);
-
-  // --- রেন্ডার অংশ ---
-  if (loading && !dashboardData) {
-    return (
-      <Container className="text-center mt-5">
-        <Spinner animation="border" variant="primary" />
-        <p className="mt-3">ড্যাশবোর্ড লোড হচ্ছে...</p>
-      </Container>
-    );
-  }
-
-  if (error) {
-    return (
-      <Container className="text-center mt-5">
-        <Alert variant="danger">{error}</Alert>
-        <Button variant="primary" onClick={fetchDashboardData}>
-          পুনরায় চেষ্টা করুন
-        </Button>
-      </Container>
-    );
-  }
-
-  if (!dashboardData) {
-    return (
-      <Container className="text-center mt-5">
-        <Alert variant="warning">কোনো ড্যাশবোর্ড ডেটা পাওয়া যায়নি।</Alert>
-      </Container>
-    );
-  }
-
-  const { nid, driving_licenses, vehicle_fitnesses, e_tin, notifications } =
-    dashboardData;
+  })();
 
   return (
-    <Container className="my-4">
-      {/* ✅ লগইন করা ইউজারের তথ্য (Role Alert) */}
-      {user && (
-        <Alert
-          variant={user.role === 'admin' ? 'warning' : 'info'}
-          className="text-center fs-5 fw-semibold shadow-sm mb-4"
-        >
-          {user.role === 'admin' ? (
-            <>
-              ⚙️ আপনি এখন{' '}
-              <Badge bg="warning" text="dark">
-                অ্যাডমিন
-              </Badge>{' '}
-              হিসেবে লগইন করেছেন
-            </>
+    <div>
+      <h5 className="mb-3">
+        <WalletFill className="me-2" />
+        ডিজিটাল ডকুমেন্ট ওয়ালেট
+      </h5>
+
+      {/* ✅ সারসংক্ষেপ */}
+      <Card className="mb-4 shadow-sm">
+        <Card.Header className="fw-bold">
+          <BarChartFill className="me-2" /> সেবার সারসংক্ষেপ
+        </Card.Header>
+        <Card.Body>
+          {serviceStatusData.datasets[0].data.every((n) => n === 0) ? (
+            <p className="text-muted text-center">
+              📊 স্ট্যাটাস দেখানোর মতো কোনো ডেটা নেই।
+            </p>
           ) : (
-            <>
-              👤 আপনি এখন{' '}
-              <Badge bg="info" text="dark">
-                ব্যবহারকারী
-              </Badge>{' '}
-              হিসেবে লগইন করেছেন
-            </>
+            <StatusChart chartData={serviceStatusData} />
           )}
-          <br />
-          <small className="text-muted">{user.email}</small>
-        </Alert>
-      )}
-
-      {/* 🔔 Notification Section */}
-      <Card className="mb-4 shadow-sm">
-        <Card.Body>
-          <NotificationWidget
-            notifications={notifications}
-            onActionComplete={fetchDashboardData}
-          />
         </Card.Body>
       </Card>
 
-      {loading && (
-        <div className="text-center">
-          <Spinner animation="border" size="sm" /> রিফ্রেশ হচ্ছে...
-        </div>
-      )}
-
-      {/* --- সেবার সারসংক্ষেপ --- */}
-      <Card className="mb-4 shadow-sm">
-        <Card.Body>
-          <h4 className="mb-3 text-center">📊 সেবার সারসংক্ষেপ</h4>
-          <StatusChart chartData={serviceStatusData} />
-        </Card.Body>
-      </Card>
-
-      {/* --- উইজেট গ্রিড --- */}
-      <Row xs={1} md={2} lg={2} className="g-4">
+      {/* ✅ Widget Grid */}
+      <Row xs={1} md={2} className="g-4">
         <Col>
           <Card className="shadow-sm h-100">
+            <Card.Header className="fw-bold">
+              <PersonVcardFill className="me-2" />
+              জাতীয় পরিচয়পত্র
+            </Card.Header>
             <Card.Body>
               <NidWidget nid={nid} />
+              {!nid && (
+                <p className="text-muted text-center mt-2">
+                  NID তথ্য পাওয়া যায়নি।
+                </p>
+              )}
             </Card.Body>
           </Card>
         </Col>
+
         <Col>
           <Card className="shadow-sm h-100">
+            <Card.Header className="fw-bold">
+              <CarFrontFill className="me-2" />
+              ড্রাইভিং লাইসেন্স
+            </Card.Header>
             <Card.Body>
               <DrivingLicenseWidget licenses={driving_licenses} />
+              {(!driving_licenses || driving_licenses.length === 0) && (
+                <p className="text-muted text-center mt-2">
+                  কোনো লাইসেন্স রেকর্ড পাওয়া যায়নি।
+                </p>
+              )}
             </Card.Body>
           </Card>
         </Col>
+
         <Col>
           <Card className="shadow-sm h-100">
+            <Card.Header className="fw-bold">
+              <CarFrontFill className="me-2 text-info" />
+              যানবাহনের ফিটনেস
+            </Card.Header>
             <Card.Body>
               <VehicleFitnessWidget fitnesses={vehicle_fitnesses} />
+              {(!vehicle_fitnesses || vehicle_fitnesses.length === 0) && (
+                <p className="text-muted text-center mt-2">
+                  কোনো ফিটনেস রেকর্ড নেই।
+                </p>
+              )}
             </Card.Body>
           </Card>
         </Col>
+
         <Col>
           <Card className="shadow-sm h-100">
+            <Card.Header className="fw-bold">
+              <FileEarmarkTextFill className="me-2" />
+              ই-টিন (e-TIN)
+            </Card.Header>
             <Card.Body>
               <ETinWidget eTin={e_tin} />
+              {!e_tin && (
+                <p className="text-muted text-center mt-2">
+                  ই-টিন তথ্য পাওয়া যায়নি।
+                </p>
+              )}
             </Card.Body>
           </Card>
         </Col>
       </Row>
-
-      {/* --- Document Wallet Section --- */}
-      <Card className="shadow-sm mt-5 mb-4">
-        <Card.Body>
-          <h5 className="mb-3">📂 ডিজিটাল ডকুমেন্ট ওয়ালেট</h5>
-          <DocumentWallet />
-        </Card.Body>
-      </Card>
-
-      {/* --- Activity History Section --- */}
-      <Card className="shadow-sm mt-5">
-        <Card.Body>
-          <h5 className="mb-3">🕒 সাম্প্রতিক কার্যক্রম</h5>
-          <ActivityHistory />
-        </Card.Body>
-      </Card>
-    </Container>
+    </div>
   );
 };
 
-export default Dashboard;
+export default React.memo(DocumentWallet);

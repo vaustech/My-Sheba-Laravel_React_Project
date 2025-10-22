@@ -1,0 +1,433 @@
+body {
+  background-color: #121212 !important;
+  color: #e9ecef !important;
+  font-family: "Noto Sans Bengali", "Roboto", sans-serif;
+  line-height: 1.6;
+}
+
+/* --- Universal widget card design --- */
+.widget-card {
+  background: #1e1e1e !important;
+  border: 1px solid #2b2b2b !important;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  transition: all 0.25s ease;
+  height: 100%;
+  padding: 1rem;
+  color: #e9ecef !important;
+}
+
+.widget-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
+}
+
+/* --- Widget Header --- */
+.widget-header {
+  background: linear-gradient(90deg, #1c1c1c 0%, #141414 100%);
+  border-bottom: 1px solid #2f2f2f;
+  padding: 0.8rem 1.2rem;
+  font-weight: 600;
+  color: #f8f9fa !important;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.widget-header i {
+  color: #0dcaf0;
+}
+
+/* --- Widget Body --- */
+.widget-body {
+  background-color: #1e1e1e;
+  padding: 1rem 1.25rem;
+  color: #e9ecef !important;
+}
+
+.widget-placeholder {
+  text-align: center;
+  color: #adb5bd !important;
+  font-size: 0.95rem;
+  padding: 1rem;
+}
+
+/* --- Chart container --- */
+.chart-container {
+  width: 100%;
+  max-width: 240px;
+  margin: 0 auto;
+  padding: 1rem 0;
+}
+
+.fade-in-chart {
+  animation: fadeInChart 1.2s ease-in-out;
+}
+
+@keyframes fadeInChart {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* --- Smooth fade up --- */
+.widget-card {
+  animation: fadeUpCard 0.6s ease-out forwards;
+}
+
+@keyframes fadeUpCard {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Scrollbar --- */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+/* 🔧 Fix for Card Header (white strip issue) */
+.card-header,
+.widget-card .card-header {
+  background: #1a1a1a !important;   /* গাঢ় ডার্ক */
+  border-bottom: 1px solid #2b2b2b !important;
+  color: #e9ecef !important;
+  font-weight: 600;
+  padding: 0.8rem 1rem;
+  border-top-left-radius: 12px !important;
+  border-top-right-radius: 12px !important;
+}
+
+/* Optional subtle gradient effect (looks premium) */
+.card-header {
+  background: linear-gradient(180deg, #1f1f1f 0%, #161616 100%) !important;
+}
+
+/* Card Body fix (ensure full dark consistency) */
+.card-body {
+  background-color: #1e1e1e !important;
+  color: #e9ecef !important;
+  border-bottom-left-radius: 12px !important;
+  border-bottom-right-radius: 12px !important;
+}
+/* Document Wallet Item Hover */
+.widget-item {
+  transition: all 0.3s ease;
+}
+.widget-item:hover {
+  background: #262626;
+  border-color: #0dcaf0;
+  box-shadow: 0 0 8px rgba(13, 202, 240, 0.25);
+}
+
+/* Loading Spinner Alignment Fix */
+.spinner-border {
+  vertical-align: middle;
+}
+/* Activity Table Dark Style */
+.table-dark {
+  background-color: #1e1e1e !important;
+  color: #e9ecef !important;
+  border-color: #2b2b2b !important;
+}
+
+.table-dark th {
+  background-color: #2b2b2b !important;
+  color: #0dcaf0 !important;
+  font-weight: 600;
+}
+
+.table-dark td {
+  background-color: #1b1b1b !important;
+  color: #e9ecef !important;
+}
+
+.table-dark tr:hover td {
+  background-color: #262626 !important;
+  box-shadow: inset 0 0 5px rgba(13, 202, 240, 0.2);
+}
+
+/* Subtle divider line between rows */
+.table-dark tbody tr {
+  border-bottom: 1px solid #333 !important;
+}
+/* =============== STEP 7A: Dashboard Widget Layout & Typography Polish =============== */
+
+/* Unified widget base */
+.widget-card {
+  background: #1e1e1e !important;
+  border: 1px solid #2b2b2b !important;
+  border-radius: 12px;
+  color: #e0e0e0 !important;
+  padding: 1rem;
+  transition: all 0.3s ease;
+  height: 100%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.widget-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(13, 202, 240, 0.25);
+}
+
+/* Widget header polish */
+.widget-card .card-header,
+.widget-header {
+  background: linear-gradient(180deg, #1b1b1b 0%, #121212 100%) !important;
+  border-bottom: 1px solid #2b2b2b !important;
+  color: #f8f9fa !important;
+  font-weight: 600;
+  padding: 0.9rem 1.2rem;
+  font-size: 1.05rem;
+  letter-spacing: 0.3px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Title text color balancing */
+.widget-card h5,
+.card-header h5 {
+  color: #f1f1f1;
+  font-weight: 600;
+}
+
+/* Widget body alignment */
+.widget-card .card-body,
+.widget-body {
+  background-color: #1e1e1e;
+  color: #d1d1d1 !important;
+  font-size: 0.96rem;
+  line-height: 1.6;
+  padding: 1.2rem;
+}
+
+/* Placeholder text design */
+.widget-placeholder {
+  text-align: center;
+  color: #868e96 !important;
+  font-size: 0.95rem;
+  margin-top: 1rem;
+}
+
+/* Row/Col spacing uniformity */
+.row.g-4 {
+  row-gap: 1.75rem !important;
+  column-gap: 1.5rem !important;
+}
+
+/* Responsive fix for mobile */
+@media (max-width: 768px) {
+  .widget-card {
+    padding: 0.8rem;
+  }
+  .widget-card .card-header {
+    font-size: 1rem;
+  }
+  .widget-card .card-body {
+    font-size: 0.9rem;
+  }
+}
+
+/* Smooth icon visual polish */
+.widget-header svg,
+.card-header svg {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  transition: transform 0.25s ease;
+}
+.widget-card:hover svg {
+  transform: scale(1.1);
+  opacity: 1;
+}
+/* ================= STEP 7B: Chart & Empty-State Enhancement ================= */
+
+/* Chart Container polish */
+.chart-container {
+  position: relative;
+  width: 100%;
+  max-width: 240px;
+  margin: 0 auto;
+  padding: 1rem 0;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 0 10px rgba(13, 202, 240, 0.15));
+}
+
+/* Center Label */
+.chart-center-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1rem;
+  font-weight: 600;
+  color: #adb5bd;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
+}
+
+/* Smooth Fade-in animation */
+.fade-in-chart {
+  animation: fadeInChart 1.2s ease-in-out;
+}
+
+@keyframes fadeInChart {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Empty-state inside chart */
+.chart-empty {
+  background: #1a1a1a;
+  border: 1px dashed #2b2b2b;
+  border-radius: 12px;
+  padding: 2rem 1rem;
+  color: #868e96 !important;
+  font-size: 0.95rem;
+}
+.chart-empty i {
+  color: #6c757d;
+}
+/* ================= STEP 7C: Notification Widget Polish ================= */
+
+/* Notification item styling */
+.notification-item {
+  background: #1b1b1b;
+  border: 1px solid #2b2b2b;
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.notification-item:hover {
+  background: #242424;
+  border-color: #0dcaf0;
+  box-shadow: 0 0 10px rgba(13, 202, 240, 0.25);
+}
+
+/* Notification title and text */
+.notification-item .fw-semibold {
+  font-size: 1rem;
+}
+.notification-item .text-muted {
+  color: #adb5bd !important;
+}
+
+/* Button glow effect */
+button.btn-outline-info {
+  border-color: #0dcaf0 !important;
+  color: #0dcaf0 !important;
+  transition: all 0.25s ease;
+}
+button.btn-outline-info:hover {
+  background-color: #0dcaf0 !important;
+  color: #000 !important;
+  box-shadow: 0 0 8px rgba(13, 202, 240, 0.4);
+}
+/* ================= STEP 7D: Sidebar & Menu Polish ================= */
+
+.sidebar {
+  position: fixed;
+  top: 56px; /* matches navbar height */
+  left: 0;
+  width: 240px;
+  height: 100%;
+  background-color: #1b1b1b;
+  border-right: 1px solid #2b2b2b;
+  color: #e9ecef;
+  padding: 1.2rem 1rem;
+  overflow-y: auto;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.sidebar-header {
+  font-size: 1.2rem;
+  color: #0dcaf0;
+  font-weight: 600;
+}
+
+.sidebar-menu {
+  margin-top: 1rem;
+}
+
+/* Base link */
+.sidebar-link {
+  color: #adb5bd !important;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 0.4rem;
+  transition: all 0.25s ease;
+  font-weight: 500;
+  font-size: 0.96rem;
+}
+
+/* Hover effect */
+.sidebar-link:hover {
+  background: #212529;
+  color: #0dcaf0 !important;
+  transform: translateX(3px);
+}
+
+/* Active item highlight */
+.sidebar-link.active {
+  background: linear-gradient(90deg, #0dcaf0 0%, #0d6efd 100%);
+  color: #fff !important;
+  font-weight: 600;
+  box-shadow: 0 0 12px rgba(13, 202, 240, 0.4);
+}
+
+/* Icons */
+.sidebar-link svg {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  transition: transform 0.25s ease;
+}
+.sidebar-link:hover svg {
+  transform: scale(1.15);
+  opacity: 1;
+}
+
+/* Scrollbar */
+.sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+.sidebar::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 10px;
+}
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Responsive fix */
+@media (max-width: 992px) {
+  .sidebar {
+    display: none;
+  }
+}

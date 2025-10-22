@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import apiClient from '../api/axios';
 import { Card, ListGroup, Button, Alert, Spinner } from 'react-bootstrap';
-
+import "../styles/WidgetCard.css";
 // 🔸 নোটিফিকেশনের টাইপ অনুযায়ী রঙ নির্ধারণ
 const getVariant = (type) => {
   switch (type) {

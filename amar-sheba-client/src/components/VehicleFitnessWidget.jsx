@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, ListGroup, Badge } from 'react-bootstrap';
-
+import "./../styles/WidgetCard.css"; 
 const getExpiryBadge = (expiryDate) => {
   if (!expiryDate) return <Badge bg="secondary">N/A</Badge>;
 

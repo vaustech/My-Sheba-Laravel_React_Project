@@ -1,0 +1,45 @@
+.app-navbar,
+.navbar,
+.navbar-dark {
+  background-color: #1b1b1b !important;
+  border-bottom: 1px solid #2b2b2b !important;
+  color: #e9ecef !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* Navbar Brand */
+.navbar-brand {
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #0dcaf0 !important;
+}
+
+/* Navbar Links */
+.nav-link-custom {
+  font-weight: 500;
+  color: #e9ecef !important;
+  transition: all 0.25s ease;
+  padding: 0.6rem 1rem;
+}
+
+.nav-link-custom:hover {
+  color: #0dcaf0 !important;
+  background-color: #212529;
+  border-radius: 6px;
+}
+
+.nav-link-custom.active {
+  color: #0dcaf0 !important;
+  border-bottom: 2px solid #0dcaf0;
+}
+
+/* Toggler */
+.navbar-toggler {
+  border-color: #444 !important;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(233,236,239, 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}

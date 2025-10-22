@@ -23,8 +23,7 @@ import {
   CarFrontFill,
   FileEarmarkTextFill,
   WalletFill,
-  ClockHistory
-,
+  ClockHistory,
 } from 'react-bootstrap-icons';
 
 const Dashboard = () => {
@@ -51,7 +50,7 @@ const Dashboard = () => {
     fetchDashboardData();
   }, [fetchDashboardData]);
 
-  // --- সার্ভিস স্ট্যাটাস ডেটা (অপরিবর্তিত লজিক) ---
+  // --- সার্ভিস স্ট্যাটাস ডেটা (Logic অপরিবর্তিত) ---
   const serviceStatusData = useMemo(() => {
     if (!dashboardData) return null;
 
@@ -77,25 +76,21 @@ const Dashboard = () => {
     });
 
     return {
-      labels: [
-        'Active (সক্রিয়)',
-        'Expiring Soon (মেয়াদ শেষের পথে)',
-        'Expired (মেয়াদোত্তীর্ণ)',
-      ],
+      labels: ['Active', 'Expiring Soon', 'Expired'],
       datasets: [
         {
           data: [active, expiringSoon, expired],
           backgroundColor: [
-            'rgba(25, 135, 84, 0.7)',
-            'rgba(255, 193, 7, 0.7)',
-            'rgba(220, 53, 69, 0.7)',
+            'rgba(13, 202, 240, 0.8)',
+            'rgba(255, 193, 7, 0.8)',
+            'rgba(220, 53, 69, 0.8)',
           ],
           borderColor: [
-            'rgba(25, 135, 84, 1)',
+            'rgba(13, 202, 240, 1)',
             'rgba(255, 193, 7, 1)',
             'rgba(220, 53, 69, 1)',
           ],
-          borderWidth: 1,
+          borderWidth: 2,
         },
       ],
     };
@@ -104,12 +99,9 @@ const Dashboard = () => {
   // --- Loading State ---
   if (loading && !dashboardData) {
     return (
-      <div
-        className="d-flex justify-content-center align-items-center"
-        style={{ minHeight: '300px' }}
-      >
-        <Spinner animation="border" variant="primary" />
-        <span className="ms-3">ড্যাশবোর্ড লোড হচ্ছে...</span>
+      <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '300px' }}>
+        <Spinner animation="border" variant="info" />
+        <span className="ms-3 text-light">ড্যাশবোর্ড লোড হচ্ছে...</span>
       </div>
     );
   }
@@ -117,144 +109,128 @@ const Dashboard = () => {
   // --- Error State ---
   if (error) {
     return (
-      <Alert variant="danger" className="text-center">
+      <Alert variant="dark" className="text-center text-danger bg-transparent border border-danger-subtle">
         {error}
         <div className="mt-2">
           <Button variant="outline-danger" size="sm" onClick={fetchDashboardData}>
-            পুনরায় চেষ্টা করুন
+            🔁 পুনরায় চেষ্টা করুন
           </Button>
         </div>
       </Alert>
     );
   }
 
-  // --- No Data State ---
   if (!dashboardData) {
     return (
-      <Alert variant="warning" className="text-center">
+      <Alert variant="secondary" className="text-center text-light bg-dark border border-secondary">
         কোনো ড্যাশবোর্ড ডেটা পাওয়া যায়নি।
       </Alert>
     );
   }
 
-  const { nid, driving_licenses, vehicle_fitnesses, e_tin, notifications } =
-    dashboardData;
+  const { nid, driving_licenses, vehicle_fitnesses, e_tin, notifications } = dashboardData;
 
-  // --- Main Dashboard Render ---
   return (
-    <div>
+    <div className="container-fluid py-3" style={{ color: '#e9ecef' }}>
       {/* 🔔 Notification Section */}
       {Array.isArray(notifications) && notifications.length > 0 && (
-        <Card className="mb-4 border-start border-warning border-3 shadow-sm">
-          <Card.Header className="d-flex align-items-center bg-light fw-bold">
-            <BellFill className="me-2 text-warning" />
+        <Card className="mb-4 border-start border-info border-3 bg-dark text-light shadow-sm">
+          <Card.Header className="d-flex align-items-center bg-black-50 fw-bold">
+            <BellFill className="me-2 text-info" />
             গুরুত্বপূর্ণ নোটিফিকেশন
           </Card.Header>
           <Card.Body className="p-0">
-            <NotificationWidget
-              notifications={notifications}
-              onActionComplete={fetchDashboardData}
-            />
+            <NotificationWidget notifications={notifications} onActionComplete={fetchDashboardData} />
           </Card.Body>
         </Card>
       )}
 
-      {/* --- Main Widgets Grid --- */}
+      {/* 🧩 Main Widgets Grid */}
       <Row xs={1} md={2} lg={3} className="g-4 mb-4">
-        {/* --- Service Summary Chart --- */}
+        {/* 📊 Service Summary Chart */}
         <Col lg={4}>
-          <Card className="shadow-sm h-100">
-            <Card.Body className="d-flex flex-column chart-widget">
-              <h5 className="mb-3 text-center">
+          <Card className="widget-card shadow-sm">
+            <Card.Body className="d-flex flex-column align-items-center justify-content-center">
+              <h5 className="mb-3 text-info">
                 <BarChartFill className="me-2" />
                 সেবার সারসংক্ষেপ
               </h5>
-              <div className="flex-grow-1 d-flex align-items-center justify-content-center">
-                {serviceStatusData && <StatusChart chartData={serviceStatusData} />}
-              </div>
-            </Card.Body>
-          </Card>
-        </Col>
-
-        {/* --- NID Widget --- */}
-        <Col>
-          <Card className="shadow-sm h-100">
-            <Card.Header className="fw-bold">
-              <PersonVcardFill className="me-2" />
-              জাতীয় পরিচয়পত্র
-            </Card.Header>
-            <Card.Body>
-              <NidWidget nid={nid} />
-              {!nid && (
-                <p className="text-muted text-center mt-3">
-                  NID তথ্য পাওয়া যায়নি।
-                </p>
+              {serviceStatusData ? (
+                <StatusChart chartData={serviceStatusData} />
+              ) : (
+                <p className="widget-placeholder">📊 স্ট্যাটাস দেখানোর মতো কোনো ডেটা নেই।</p>
               )}
             </Card.Body>
           </Card>
         </Col>
 
-        {/* --- Driving License Widget --- */}
+        {/* 🪪 NID Widget */}
         <Col>
-          <Card className="shadow-sm h-100">
-            <Card.Header className="fw-bold">
-              <CarFrontFill className="me-2" />
+          <Card className="widget-card">
+            <Card.Header className="widget-header">
+              <PersonVcardFill className="me-2 text-info" />
+              জাতীয় পরিচয়পত্র
+            </Card.Header>
+            <Card.Body>
+              <NidWidget nid={nid} />
+              {!nid && <p className="widget-placeholder">NID তথ্য পাওয়া যায়নি।</p>}
+            </Card.Body>
+          </Card>
+        </Col>
+
+        {/* 🚗 Driving License */}
+        <Col>
+          <Card className="widget-card">
+            <Card.Header className="widget-header">
+              <CarFrontFill className="me-2 text-success" />
               ড্রাইভিং লাইসেন্স
             </Card.Header>
             <Card.Body>
               <DrivingLicenseWidget licenses={driving_licenses} />
               {(!driving_licenses || driving_licenses.length === 0) && (
-                <p className="text-muted text-center mt-3">
-                  কোনো লাইসেন্স রেকর্ড পাওয়া যায়নি।
-                </p>
+                <p className="widget-placeholder">কোনো লাইসেন্স রেকর্ড পাওয়া যায়নি।</p>
               )}
             </Card.Body>
           </Card>
         </Col>
 
-        {/* --- Vehicle Fitness Widget --- */}
+        {/* 🚘 Vehicle Fitness */}
         <Col>
-          <Card className="shadow-sm h-100">
-            <Card.Header className="fw-bold">
-              <CarFrontFill className="me-2 text-info" />
+          <Card className="widget-card">
+            <Card.Header className="widget-header">
+              <CarFrontFill className="me-2 text-warning" />
               যানবাহনের ফিটনেস
             </Card.Header>
             <Card.Body>
               <VehicleFitnessWidget fitnesses={vehicle_fitnesses} />
               {(!vehicle_fitnesses || vehicle_fitnesses.length === 0) && (
-                <p className="text-muted text-center mt-3">
-                  কোনো ফিটনেস রেকর্ড নেই।
-                </p>
+                <p className="widget-placeholder">কোনো ফিটনেস রেকর্ড নেই।</p>
               )}
             </Card.Body>
           </Card>
         </Col>
 
-        {/* --- e-TIN Widget --- */}
+        {/* 💼 e-TIN */}
         <Col>
-          <Card className="shadow-sm h-100">
-            <Card.Header className="fw-bold">
-              <FileEarmarkTextFill className="me-2" />
+          <Card className="widget-card">
+            <Card.Header className="widget-header">
+              <FileEarmarkTextFill className="me-2 text-primary" />
               ই-টিন (e-TIN)
             </Card.Header>
             <Card.Body>
               <ETinWidget eTin={e_tin} />
-              {!e_tin && (
-                <p className="text-muted text-center mt-3">
-                  ই-টিন তথ্য পাওয়া যায়নি।
-                </p>
-              )}
+              {!e_tin && <p className="widget-placeholder">ই-টিন তথ্য পাওয়া যায়নি।</p>}
             </Card.Body>
           </Card>
         </Col>
       </Row>
 
-      {/* --- Document Wallet Section --- */}
+      {/* 📂 Document Wallet */}
       <Row>
         <Col>
-          <Card className="shadow-sm mb-4">
-            <Card.Header className="fw-bold">
-              <WalletFill className="me-2" />
+          <Card className="widget-card mb-4">
+            <Card.Header className="widget-header">
+              <WalletFill className="me-2 text-warning" />
               ডিজিটাল ডকুমেন্ট ওয়ালেট
             </Card.Header>
             <Card.Body>
@@ -264,13 +240,12 @@ const Dashboard = () => {
         </Col>
       </Row>
 
-      {/* --- Activity History Section --- */}
+      {/* 🕒 Activity History */}
       <Row>
         <Col>
-          <Card className="shadow-sm mb-4">
-            <Card.Header className="fw-bold">
-              <ClockHistory
- className="me-2" />
+          <Card className="widget-card mb-4">
+            <Card.Header className="widget-header">
+              <ClockHistory className="me-2 text-info" />
               সাম্প্রতিক কার্যক্রম
             </Card.Header>
             <Card.Body>

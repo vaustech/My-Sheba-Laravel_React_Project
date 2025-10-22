@@ -1,56 +1,61 @@
-import React from 'react';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Doughnut } from 'react-chartjs-2';
-import { Card } from 'react-bootstrap';
+// src/components/StatusChart.jsx
+import React from "react";
+import { Doughnut } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import "../styles/WidgetCard.css";
 
-// Chart.js রেজিস্ট্রেশন
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const StatusChart = ({ chartData }) => {
-  // যদি কোনো ডেটা না থাকে বা ডেটাসেট খালি থাকে
-  if (
-    !chartData ||
-    !chartData.datasets ||
-    chartData.datasets.length === 0 ||
-    chartData.datasets[0].data.every((val) => val === 0)
-  ) {
+  if (!chartData || !chartData.datasets?.[0]?.data?.length) {
     return (
-      <Card className="text-center shadow-sm">
-        <Card.Body>📊 স্ট্যাটাস দেখানোর মতো কোনো ডেটা নেই।</Card.Body>
-      </Card>
+      <div className="chart-empty text-center text-muted py-4">
+        <i className="bi bi-graph-down fs-3 d-block mb-2 text-secondary"></i>
+        <span>📊 স্ট্যাটাস দেখানোর মতো কোনো ডেটা নেই।</span>
+      </div>
     );
   }
 
   const options = {
-    responsive: true,
     plugins: {
       legend: {
-        position: 'bottom',
+        position: "bottom",
         labels: {
-          boxWidth: 15,
-          padding: 10,
+          color: "#e9ecef",
+          boxWidth: 14,
+          padding: 18,
+          font: { size: 13, weight: 500 },
         },
       },
       tooltip: {
-        callbacks: {
-          label: function (context) {
-            let label = context.label || '';
-            if (label) label += ': ';
-            if (context.parsed !== null) label += context.parsed;
-            return label;
-          },
-        },
+        backgroundColor: "rgba(33, 37, 41, 0.85)",
+        titleColor: "#0dcaf0",
+        bodyColor: "#e9ecef",
+        borderColor: "#0dcaf0",
+        borderWidth: 1,
+        padding: 10,
+        displayColors: false,
       },
+    },
+    cutout: "68%",
+    radius: "90%",
+    animation: {
+      animateRotate: true,
+      animateScale: true,
+      duration: 1400,
     },
   };
 
   return (
-    <Card className="shadow-sm text-center p-3">
-      <Card.Title>সেবা স্ট্যাটাস চার্ট</Card.Title>
-      <div style={{ maxWidth: '400px', margin: 'auto' }}>
-        <Doughnut data={chartData} options={options} />
-      </div>
-    </Card>
+    <div className="chart-container fade-in-chart position-relative">
+      <Doughnut data={chartData} options={options} />
+      <div className="chart-center-text">সেবা</div>
+    </div>
   );
 };
 

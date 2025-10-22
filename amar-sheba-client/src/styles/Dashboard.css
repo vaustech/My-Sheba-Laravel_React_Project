@@ -1,0 +1,98 @@
+/* 🌤️ Light Theme Dashboard Styling */
+body {
+  background-color: #f8f9fa;
+  font-family: "Noto Sans Bengali", "Poppins", sans-serif;
+  color: #212529;
+}
+
+.dashboard-container {
+  min-height: 100vh;
+}
+
+.dashboard-title {
+  font-size: 1.8rem;
+  color: #0d6efd;
+}
+
+.dashboard-card {
+  background-color: #ffffff;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  transition: all 0.25s ease-in-out;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  border-color: #d0d0d0;
+}
+
+.dashboard-card .card-title {
+  border-bottom: 2px solid #0d6efd1a;
+  padding-bottom: 0.5rem;
+}
+
+.text-muted {
+  font-size: 0.95rem;
+}
+
+.container {
+  max-width: 1140px;
+}
+
+/* subtle gradient header background */
+.card-header {
+  background: linear-gradient(90deg, #f8f9fa 0%, #eef3f8 100%);
+  font-weight: 600;
+  color: #495057;
+}
+
+/* responsive tweaks */
+@media (max-width: 768px) {
+  .dashboard-title {
+    font-size: 1.5rem;
+  }
+
+  .dashboard-card {
+    padding: 1.25rem;
+  }
+}
+/* 🌫️ Smooth Page Fade Animation */
+.dashboard-container {
+  animation: fadeInPage 0.9s ease-in-out;
+}
+
+@keyframes fadeInPage {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 💨 Widget card fade-up effect */
+.widget-card {
+  opacity: 0;
+  transform: translateY(15px);
+  animation: fadeUpCard 0.8s ease-out forwards;
+}
+
+.widget-card:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.widget-card:nth-child(3) {
+  animation-delay: 0.2s;
+}
+.widget-card:nth-child(4) {
+  animation-delay: 0.3s;
+}
+
+@keyframes fadeUpCard {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

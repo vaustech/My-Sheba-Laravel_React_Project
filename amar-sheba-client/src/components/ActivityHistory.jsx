@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import apiClient from '../api/axios';
+import "../styles/WidgetCard.css";
 import {
   Card,
   Table,
